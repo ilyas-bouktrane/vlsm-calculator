@@ -7,7 +7,8 @@ export default function Header() {
   return (
     <header className="fixed right-0 left-0 top-0 border-b-2 backdrop-blur-md flex justify-center">
       <div
-        className={`gap-y-2 flex flex-col sm:flex-row justify-between items-center w-full max-w-[${DEFAULT_PAGE_WIDTH}] p-3`}
+        className={`gap-y-2 flex flex-col sm:flex-row justify-between items-center w-full p-3`}
+        style={{ maxWidth: DEFAULT_PAGE_WIDTH }}
       >
         <div className="flex gap-3 items-center self-start">
           <Network size={40} />

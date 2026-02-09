@@ -12,7 +12,10 @@ import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Badge } from "../ui/badge";
 import { useVlsmContext } from "./vlsm-provider";
-import { validateIpv4NetworkAddressFormat } from "@/lib/utils";
+import {
+  validateIpv4NetworkAddressFormat,
+  validateIpv4SubnetAddress,
+} from "@/lib/utils";
 
 export default function UserInputs() {
   const {
@@ -22,8 +25,22 @@ export default function UserInputs() {
     setDesiredSubnetworks,
   } = useVlsmContext();
 
-  const addressIsValid =
-    validateIpv4NetworkAddressFormat(rootNetwork) || rootNetwork.length === 0;
+  const rootAddrFormatIsValid = validateIpv4NetworkAddressFormat(rootNetwork);
+  const rootAddrSubnet = validateIpv4SubnetAddress(rootNetwork);
+
+  const rootAddrIsValid = rootAddrFormatIsValid && rootAddrSubnet.isValid;
+  const rootAddrValidationMsg = !rootAddrFormatIsValid ? (
+    <span className="text-sm text-red-500 text-right">
+      *Invalid network address format
+    </span>
+  ) : !rootAddrSubnet.isValid ? (
+    <span className="text-sm text-red-500 text-right">
+      *Invalid network subnet, do you mean{" "}
+      {rootAddrSubnet.closestValidSubnet.join(".")}/{rootNetwork.split("/")[1]}?
+    </span>
+  ) : (
+    <span className="text-sm text-green-500 text-right">Valid Address</span>
+  );
 
   const updateDesiredSubnetField = (
     index: number,
@@ -58,17 +75,13 @@ export default function UserInputs() {
           <Input
             placeholder="e.g., 192.168.0.0/24, 10.0.0.0/8..."
             type="text"
-            className={`placeholder:opacity-75 ${!addressIsValid && "border-red-500 border-2"}`}
+            className={`placeholder:opacity-75 ${rootNetwork.length === 0 ? "" : !rootAddrIsValid ? "border-red-500 border-2" : "border-green-500"}`}
             value={rootNetwork}
             onChange={(e) => setRootNetwork(e.target.value)}
           />
-          {!addressIsValid ? (
-            <span className="text-sm text-red-500 text-right">
-              *Invalid network address
-            </span>
-          ) : (
-            <></>
-          )}
+          <div className="flex justify-end">
+            {rootNetwork.length !== 0 && rootAddrValidationMsg}
+          </div>
         </CardContent>
       </Card>
       <Card>

@@ -6,7 +6,6 @@ import "@fontsource/cascadia-code";
 import "@fontsource/cascadia-mono";
 import "./globals.css";
 
-
 export const metadata: Metadata = {
   title: "VLSM Calculator",
   description:
@@ -21,7 +20,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`antialiased max-w-[${DEFAULT_PAGE_WIDTH}] mx-auto h-full`}
+        className={`antialiased mx-auto h-full`}
+        style={{ maxWidth: DEFAULT_PAGE_WIDTH }}
       >
         <ThemeProvider
           attribute="class"

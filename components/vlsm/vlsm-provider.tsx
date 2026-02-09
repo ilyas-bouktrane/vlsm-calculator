@@ -1,6 +1,6 @@
 "use client";
 
-import { DesiredSubnetworksType, VlsmContextType } from "@/lib/types";
+import { CalculationSummaryType, DesiredSubnetworksType, VlsmContextType } from "@/lib/types";
 import { validateIpv4NetworkAddressFormat } from "@/lib/utils";
 import { createContext, useContext, useState } from "react";
 
@@ -13,11 +13,12 @@ export default function VlsmContextProvider({
 }) {
   const [rootNetwork, setRootNetwork] = useState<string>("");
   const [desiredSubnetworks, setDesiredSubnetworks] =
-    useState<DesiredSubnetworksType>([]);
+    useState<DesiredSubnetworksType[]>([]);
   const readyToCalculate =
     validateIpv4NetworkAddressFormat(rootNetwork) &&
     desiredSubnetworks.length > 0 &&
     desiredSubnetworks.every(({ id, hosts }) => id.length !== 0 && hosts > 0);
+  const [calculationSummary, setCalculationSummary] = useState<CalculationSummaryType[]>([]);
 
   return (
     <VlsmContext.Provider
@@ -27,6 +28,8 @@ export default function VlsmContextProvider({
         desiredSubnetworks,
         setDesiredSubnetworks,
         readyToCalculate,
+        calculationSummary,
+        setCalculationSummary
       }}
     >
       {children}

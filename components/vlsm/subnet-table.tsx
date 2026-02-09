@@ -11,8 +11,11 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { TableProperties } from "lucide-react";
+import { useVlsmContext } from "./vlsm-provider";
 
 export default function SubnetTable() {
+  const { calculationSummary } = useVlsmContext();
+
   return (
     <Card className="gap-0">
       <CardHeader>
@@ -39,43 +42,19 @@ export default function SubnetTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            
-            <TableRow>
-              <TableCell>LAN-HR</TableCell>
-              <TableCell>50/62 available</TableCell>
-              <TableCell>192.168.1.0/27</TableCell>
-              <TableCell>255.255.255.192</TableCell>
-              <TableCell>192.168.1.1 - 192.168.1.62</TableCell>
-              <TableCell>192.168.1.63</TableCell>
-              <TableCell className="text-right">
-                <Badge>/27</Badge>
-              </TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>LAN-HR</TableCell>
-              <TableCell>50/62 available</TableCell>
-              <TableCell>192.168.1.0/27</TableCell>
-              <TableCell>255.255.255.192</TableCell>
-              <TableCell>192.168.1.1 - 192.168.1.62</TableCell>
-              <TableCell>192.168.1.63</TableCell>
-              <TableCell className="text-right">
-                <Badge>/27</Badge>
-              </TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>LAN-HR</TableCell>
-              <TableCell>50/62 available</TableCell>
-              <TableCell>192.168.1.0/27</TableCell>
-              <TableCell>255.255.255.192</TableCell>
-              <TableCell>192.168.1.1 - 192.168.1.62</TableCell>
-              <TableCell>192.168.1.63</TableCell>
-              <TableCell className="text-right">
-                <Badge>/27</Badge>
-              </TableCell>
-            </TableRow>
-
+            {calculationSummary.map((c, index) => (
+              <TableRow key={`row-${index}`}>
+                <TableCell key={`subnet-${index}`}>{c.subnetName}</TableCell>
+                <TableCell key={`hosts-${index}`}>{c.hosts}</TableCell>
+                <TableCell key={`network-${index}`}>{c.networkAddr}</TableCell>
+                <TableCell key={`mask-${index}`}>{c.networkMask}</TableCell>
+                <TableCell key={`range-${index}`}>{c.range}</TableCell>
+                <TableCell key={`broadcast-${index}`}>{c.broadcast}</TableCell>
+                <TableCell key={`cidr-${index}`} className="text-right">
+                  <Badge>{c.networkCidr}</Badge>
+                </TableCell>
+              </TableRow>
+            ))}
           </TableBody>
         </Table>
       </CardContent>
