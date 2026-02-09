@@ -11,10 +11,40 @@ import {
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
 import { Badge } from "../ui/badge";
+import { useVlsmContext } from "./vlsm-provider";
+import { validateIpv4NetworkAddressFormat } from "@/lib/utils";
 
 export default function UserInputs() {
+  const {
+    rootNetwork,
+    setRootNetwork,
+    desiredSubnetworks,
+    setDesiredSubnetworks,
+  } = useVlsmContext();
+
+  const addressIsValid =
+    validateIpv4NetworkAddressFormat(rootNetwork) || rootNetwork.length === 0;
+
+  const updateDesiredSubnetField = (
+    index: number,
+    field: "hosts" | "id",
+    value: string | number,
+  ) => {
+    setDesiredSubnetworks((prev) =>
+      prev.map((s, i) => (i === index ? { ...s, [field]: value } : s)),
+    );
+  };
+
+  const deleteDesiredSubnetField = (index: number) => {
+    setDesiredSubnetworks((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const addDesiredSubnetField = () => {
+    setDesiredSubnetworks((prev) => [...prev, { id: "", hosts: 0 }]);
+  };
+
   return (
-    <div className="grid grid-cols-[1fr_2fr] gap-3">
+    <div className="grid sm:grid-rows-2 md:grid-rows-1 md:grid-cols-[1fr_2fr] gap-3">
       <Card>
         <CardHeader className="gap-0">
           <CardTitle className="text-xl flex gap-2 items-center">
@@ -28,8 +58,17 @@ export default function UserInputs() {
           <Input
             placeholder="e.g., 192.168.0.0/24, 10.0.0.0/8..."
             type="text"
-            className=" placeholder:opacity-75"
+            className={`placeholder:opacity-75 ${!addressIsValid && "border-red-500 border-2"}`}
+            value={rootNetwork}
+            onChange={(e) => setRootNetwork(e.target.value)}
           />
+          {!addressIsValid ? (
+            <span className="text-sm text-red-500 text-right">
+              *Invalid network address
+            </span>
+          ) : (
+            <></>
+          )}
         </CardContent>
       </Card>
       <Card>
@@ -40,7 +79,7 @@ export default function UserInputs() {
               DESIRED SUBNETWORKS
             </div>
             <Badge className="text-sm" variant={"secondary"}>
-              1
+              {desiredSubnetworks.length}
             </Badge>
           </CardTitle>
           <CardDescription>
@@ -50,29 +89,53 @@ export default function UserInputs() {
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-[3fr_1fr_40px] gap-x-4 gap-y-3">
-            <Label>Network ID/Name</Label>
-            <Label>Number of hosts</Label>
-            <span>{/* DELETE COL */}</span>
-            <Input
-              type="text"
-              placeholder="Subnet #1"
-              className=" placeholder:opacity-75"
-            />
-            <Input
-              type="number"
-              placeholder="0"
-              className=" placeholder:opacity-75"
-            />
-            <Button
-              variant={"outline"}
-              className="flex justify-center items-center h-full w-full hover:text-red-600"
-            >
-              <Trash2 />
-            </Button>
+            {desiredSubnetworks.length ? (
+              <>
+                <Label>Network ID/Name</Label>
+                <Label>Number of hosts</Label>
+                <span>{/* DELETE COL */}</span>
+              </>
+            ) : (
+              <></>
+            )}
+            {desiredSubnetworks.flatMap(({ hosts, id }, index) => [
+              <Input
+                key={`id-${index + 1}`}
+                type="text"
+                placeholder={`LAN-${index + 1}`}
+                className="placeholder:opacity-75"
+                value={id}
+                onChange={(e) =>
+                  updateDesiredSubnetField(index, "id", e.target.value)
+                }
+              />,
+              <Input
+                key={`hosts-${index + 1}`}
+                type="number"
+                placeholder="0"
+                className="placeholder:opacity-75 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                value={hosts}
+                onChange={(e) =>
+                  updateDesiredSubnetField(index, "hosts", e.target.value)
+                }
+              />,
+              <Button
+                key={`delete-${index + 1}`}
+                variant={"outline"}
+                className="flex justify-center items-center h-full w-full hover:text-red-600"
+                onClick={() => deleteDesiredSubnetField(index)}
+              >
+                <Trash2 />
+              </Button>,
+            ])}
           </div>
         </CardContent>
         <CardFooter className="flex justify-center items-center gap-2">
-          <Button className="w-full" variant={"secondary"}>
+          <Button
+            className="w-full"
+            variant={"secondary"}
+            onClick={() => addDesiredSubnetField()}
+          >
             <Plus />
             ADD
           </Button>

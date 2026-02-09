@@ -1,24 +1,29 @@
 import { Network } from "lucide-react";
 import { Badge } from "../ui/badge";
 import { ThemeToggle } from "../theme/theme-toggle";
+import { DEFAULT_PAGE_WIDTH } from "@/lib/constants";
 
 export default function Header() {
   return (
-    <header className="flex flex-row justify-between items-center w-full max-w-[1200px] p-3 border-b-2">
-      <div className="flex gap-3 items-center">
-        <Network size={40} />
-        <div className="flex flex-col">
-          <span className="text-2xl font-bold h-[28px]">VLSM Calculator</span>
-          <span className="text-foreground">
-            Variable Length Subnet Mask Calculator
-          </span>
+    <header className="fixed right-0 left-0 top-0 border-b-2 backdrop-blur-md flex justify-center">
+      <div
+        className={`gap-y-2 flex flex-col sm:flex-row justify-between items-center w-full max-w-[${DEFAULT_PAGE_WIDTH}] p-3`}
+      >
+        <div className="flex gap-3 items-center self-start">
+          <Network size={40} />
+          <div className="flex flex-col">
+            <span className="text-2xl font-bold h-[28px]">VLSM Calculator</span>
+            <span className="text-foreground">
+              <u>V</u>ariable <u>L</u>ength <u>S</u>ubnet <u>M</u>ask
+            </span>
+          </div>
         </div>
-      </div>
-      <div className="flex gap-2">
-        <Badge className="text-sm" variant={"outline"}>
-          IPv4 Supported
-        </Badge>
-        <ThemeToggle />
+        <div className="flex gap-2 self-end items-center h-full">
+          <Badge className="text-sm h-8" variant={"secondary"}>
+            IPv4 Supported
+          </Badge>
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

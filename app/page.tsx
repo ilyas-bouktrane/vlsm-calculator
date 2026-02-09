@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/vlsm/header";
-import VlsmProvider from "@/components/vlsm/vlsm-provider";
+import VlsmContextProvider from "@/components/vlsm/vlsm-provider";
 import UserInputs from "@/components/vlsm/user-inputs";
 import CalcResetButtons from "@/components/vlsm/calc-reset-buttons";
 import AllocationBar from "@/components/vlsm/allocation-bar";
@@ -10,7 +10,7 @@ import SubnetTable from "@/components/vlsm/subnet-table";
 import Footer from "@/components/vlsm/footer";
 
 const PageDescription = () => (
-  <span className="text-foreground text-sm my-3">
+  <span className="text-muted-foreground text-sm my-3">
     A tool that helps network engineers efficiently divide an IP network into
     subnets of varying sizes using Variable Length Subnet Masking (VLSM). It
     calculates subnet addresses, broadcast addresses, and host ranges for
@@ -20,9 +20,9 @@ const PageDescription = () => (
 
 export default function Index() {
   return (
-    <VlsmProvider>
+    <VlsmContextProvider>
       <Header />
-      <main className="p-3 flex flex-col gap-4">
+      <main className="p-3 flex flex-col gap-4 my-27 sm:my-19">
         <PageDescription />
         <UserInputs />
         <CalcResetButtons />
@@ -31,6 +31,6 @@ export default function Index() {
         <SubnetTable />
       </main>
       <Footer />
-    </VlsmProvider>
+    </VlsmContextProvider>
   );
 }

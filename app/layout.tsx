@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { DEFAULT_PAGE_WIDTH } from "@/lib/constants";
 
 import "@fontsource/cascadia-code";
 import "@fontsource/cascadia-mono";
 import "./globals.css";
+
 
 export const metadata: Metadata = {
   title: "VLSM Calculator",
@@ -17,9 +19,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="h-screen w-screen flex justify-center">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`antialiased h-full w-full max-w-[1200px] overflow-x-hidden`}
+        className={`antialiased max-w-[${DEFAULT_PAGE_WIDTH}] mx-auto h-full`}
       >
         <ThemeProvider
           attribute="class"

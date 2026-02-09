@@ -2,9 +2,7 @@
 
 import { useMemo } from "react";
 import { Badge } from "../ui/badge";
-
-const DEFAULT_COLOR_FUNCTION = (index: number) =>
-  `hsl(${180 + index * 15}, 60%, 40%)`;
+import { DEFAULT_BAR_DYNAMIC_COLORS } from "@/lib/constants";
 
 type AllocationBarItem = {
   percentage: number;
@@ -38,11 +36,11 @@ export default function HorizontalStackedBar({
             className={"h-full flex items-center justify-center px-5 w-full"}
             style={{
               maxWidth: `${percentage * 100}%`,
-              backgroundColor: DEFAULT_COLOR_FUNCTION(index),
+              backgroundColor: DEFAULT_BAR_DYNAMIC_COLORS(index),
             }}
           >
             {percentage >= 0.1 ? (
-              <span className="truncate">{label}</span>
+              <span className="truncate text-white">{label}</span>
             ) : (
               <></>
             )}
@@ -59,7 +57,7 @@ export default function HorizontalStackedBar({
             <div
               className="h-3.5 w-3.5 rounded-2xl"
               style={{
-                backgroundColor: DEFAULT_COLOR_FUNCTION(index),
+                backgroundColor: DEFAULT_BAR_DYNAMIC_COLORS(index),
               }}
             />
             <span className="text-sm">
