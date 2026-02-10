@@ -4,10 +4,12 @@ import Header from "@/components/vlsm/header";
 import VlsmContextProvider from "@/components/vlsm/vlsm-provider";
 import UserInputs from "@/components/vlsm/user-inputs";
 import CalcResetButtons from "@/components/vlsm/calc-reset-buttons";
-import AllocationBar from "@/components/vlsm/allocation-bar";
-import InfoCards from "@/components/vlsm/info-cards";
-import SubnetTable from "@/components/vlsm/subnet-table";
+import SubnetAllocation from "@/components/vlsm/subnet-allocation";
+import SubnetInfoCards from "@/components/vlsm/subnet-info-cards";
+import CalculationSummary from "@/components/vlsm/calculation-summary";
 import Footer from "@/components/vlsm/footer";
+import RootUsageInfoCards from "@/components/vlsm/root-usage-info-cards";
+import RootUsageAllocation from "@/components/vlsm/root-usage-allocation";
 
 const PageDescription = () => (
   <span className="text-muted-foreground text-sm my-3">
@@ -26,9 +28,11 @@ export default function Index() {
         <PageDescription />
         <UserInputs />
         <CalcResetButtons />
-        <AllocationBar />
-        <InfoCards />
-        <SubnetTable />
+        <SubnetAllocation />
+        <SubnetInfoCards />
+        <CalculationSummary />
+        <RootUsageInfoCards />
+        <RootUsageAllocation />
       </main>
       <Footer />
     </VlsmContextProvider>

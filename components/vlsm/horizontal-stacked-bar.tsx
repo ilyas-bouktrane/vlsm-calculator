@@ -3,17 +3,12 @@
 import { useMemo } from "react";
 import { Badge } from "../ui/badge";
 import { DEFAULT_BAR_DYNAMIC_COLORS } from "@/lib/constants";
-
-type AllocationBarItem = {
-  percentage: number;
-  label: string;
-  cidr: string;
-};
+import { AllocationBarItemType } from "@/lib/types";
 
 export default function HorizontalStackedBar({
   allocations,
 }: {
-  allocations: AllocationBarItem[];
+  allocations: AllocationBarItemType[];
 }) {
   const unallocatedPercentage = useMemo(
     () =>
@@ -33,7 +28,7 @@ export default function HorizontalStackedBar({
         {allocations.map(({ percentage, label }, index) => (
           <div
             key={index}
-            className={"h-full flex items-center justify-center px-5 w-full"}
+            className={"h-full flex items-center justify-center p-0 w-full"}
             style={{
               maxWidth: `${percentage * 100}%`,
               backgroundColor: DEFAULT_BAR_DYNAMIC_COLORS(index),
@@ -61,7 +56,7 @@ export default function HorizontalStackedBar({
               }}
             />
             <span className="text-sm">
-              {label + cidr} ({Math.round(percentage * 100)}%)
+              {label}/{cidr} ({Math.round(percentage * 10 ** 4) / 100}%)
             </span>
           </Badge>
         ))}

@@ -14,7 +14,7 @@ import { TableProperties } from "lucide-react";
 import { useVlsmContext } from "./vlsm-provider";
 import { getSubnetMinSizeFromHosts } from "@/lib/utils";
 
-export default function SubnetTable() {
+export default function CalculationSummary() {
   const { calculationSummary } = useVlsmContext();
 
   return calculationSummary.length !== 0 ? (
@@ -31,6 +31,7 @@ export default function SubnetTable() {
             <TableRow>
               <TableHead className="text-muted-foreground">Subnet</TableHead>
               <TableHead className="text-muted-foreground">Hosts</TableHead>
+              <TableHead className="text-muted-foreground">Capacity</TableHead>
               <TableHead className="text-muted-foreground">
                 Network Address
               </TableHead>
@@ -43,25 +44,37 @@ export default function SubnetTable() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {calculationSummary.map((c, index) => (
-              <TableRow key={`row-${index}`}>
-                <TableCell key={`name-${index}`}>{c.name}</TableCell>
-                <TableCell key={`hosts-${index}`}>
-                  {c.hosts} / {getSubnetMinSizeFromHosts(c.hosts) - 2} usable
-                </TableCell>
-                <TableCell key={`network-${index}`}>
-                  {c.address}/{c.cidr}
-                </TableCell>
-                <TableCell key={`mask-${index}`}>{c.mask}</TableCell>
-                <TableCell key={`range-${index}`}>
-                  {c.range[0]} - {c.range[1]}
-                </TableCell>
-                <TableCell key={`broadcast-${index}`}>{c.broadcast}</TableCell>
-                <TableCell key={`cidr-${index}`} className="text-right">
-                  <Badge>/{c.cidr}</Badge>
-                </TableCell>
-              </TableRow>
-            ))}
+            {calculationSummary.map((c, index) => {
+              const subnetCapacity = getSubnetMinSizeFromHosts(c.hosts) - 2;
+              const hostsPercentage = Math.round(
+                (c.hosts / subnetCapacity) * 100,
+              );
+
+              return (
+                <TableRow key={`row-${index}`}>
+                  <TableCell key={`name-${index}`}>{c.name}</TableCell>
+                  <TableCell key={`hosts-${index}`}>
+                    {c.hosts} / {subnetCapacity} usable
+                  </TableCell>
+                  <TableCell key={`capacity-${index}`}>
+                    {hostsPercentage}%
+                  </TableCell>
+                  <TableCell key={`network-${index}`}>
+                    {c.address}/{c.cidr}
+                  </TableCell>
+                  <TableCell key={`mask-${index}`}>{c.mask}</TableCell>
+                  <TableCell key={`range-${index}`}>
+                    {c.range[0]} - {c.range[1]}
+                  </TableCell>
+                  <TableCell key={`broadcast-${index}`}>
+                    {c.broadcast}
+                  </TableCell>
+                  <TableCell key={`cidr-${index}`} className="text-right">
+                    <Badge>/{c.cidr}</Badge>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </CardContent>

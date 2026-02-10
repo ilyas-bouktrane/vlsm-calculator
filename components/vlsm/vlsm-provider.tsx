@@ -3,6 +3,7 @@
 import {
   CalculationSummaryType,
   DesiredSubnetworksType,
+  MiniCardsInfosType,
   VlsmContextType,
 } from "@/lib/types";
 import {
@@ -20,13 +21,15 @@ export default function VlsmContextProvider({
   children: React.ReactNode;
 }) {
   const [rootNetwork, setRootNetwork] = useState<string>("");
+  const [miniCardsInfos, setMiniCardsInfos] =
+    useState<MiniCardsInfosType | null>(null);
   const [desiredSubnetworks, setDesiredSubnetworks] = useState<
     DesiredSubnetworksType[]
   >([]);
   const [calculationSummary, setCalculationSummary] = useState<
     CalculationSummaryType[]
   >([]);
-  
+
   const readyToCalculate =
     validateIpv4NetworkAddressFormat(rootNetwork) &&
     validateRootNetMaskForSubnets(rootNetwork, desiredSubnetworks).isValid &&
@@ -44,6 +47,8 @@ export default function VlsmContextProvider({
         readyToCalculate,
         calculationSummary,
         setCalculationSummary,
+        miniCardsInfos,
+        setMiniCardsInfos,
       }}
     >
       {children}

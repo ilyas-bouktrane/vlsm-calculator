@@ -78,8 +78,6 @@ export function calculateVlsm(
   rootNetwork: string,
   subnets: DesiredSubnetworksType[],
 ) {
-  console.log(getSubnetMinSizeFromHosts(1));
-
   const binRootAddr = decAddrToBinAddr(
     rootNetwork
       .split("/")[0]
