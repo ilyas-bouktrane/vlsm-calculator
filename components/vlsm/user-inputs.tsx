@@ -13,8 +13,11 @@ import { Label } from "../ui/label";
 import { Badge } from "../ui/badge";
 import { useVlsmContext } from "./vlsm-provider";
 import {
+  validateRootNetMaskForSubnets,
   validateIpv4NetworkAddressFormat,
   validateIpv4SubnetAddress,
+  decCidrToBinMask,
+  binAddrToDecAddr,
 } from "@/lib/utils";
 
 export default function UserInputs() {
@@ -29,7 +32,11 @@ export default function UserInputs() {
   const rootAddrSubnet = validateIpv4SubnetAddress(rootNetwork);
 
   const rootAddrIsValid = rootAddrFormatIsValid && rootAddrSubnet.isValid;
-  const rootAddrValidationMsg = !rootAddrFormatIsValid ? (
+  const rootMaskSubnet = validateRootNetMaskForSubnets(
+    rootNetwork,
+    desiredSubnetworks,
+  );
+  const validationMsg = !rootAddrFormatIsValid ? (
     <span className="text-sm text-red-500 text-right">
       *Invalid network address format
     </span>
@@ -37,6 +44,15 @@ export default function UserInputs() {
     <span className="text-sm text-red-500 text-right">
       *Invalid network subnet, do you mean{" "}
       {rootAddrSubnet.closestValidSubnet.join(".")}/{rootNetwork.split("/")[1]}?
+    </span>
+  ) : !rootMaskSubnet.isValid ? (
+    <span className="text-sm text-red-500 text-right">
+      *Insufficient network mask space, you need at least /
+      {rootMaskSubnet.closestValidMask} (
+      {binAddrToDecAddr(decCidrToBinMask(rootMaskSubnet.closestValidMask)).join(
+        ".",
+      )}
+      )
     </span>
   ) : (
     <span className="text-sm text-green-500 text-right">Valid Address</span>
@@ -48,7 +64,11 @@ export default function UserInputs() {
     value: string | number,
   ) => {
     setDesiredSubnetworks((prev) =>
-      prev.map((s, i) => (i === index ? { ...s, [field]: value } : s)),
+      prev.map((s, i) =>
+        i === index
+          ? { ...s, [field]: field === "hosts" ? Number(value) : value }
+          : s,
+      ),
     );
   };
 
@@ -80,7 +100,7 @@ export default function UserInputs() {
             onChange={(e) => setRootNetwork(e.target.value)}
           />
           <div className="flex justify-end">
-            {rootNetwork.length !== 0 && rootAddrValidationMsg}
+            {rootNetwork.length !== 0 && validationMsg}
           </div>
         </CardContent>
       </Card>
@@ -127,10 +147,11 @@ export default function UserInputs() {
                 type="number"
                 placeholder="0"
                 className="placeholder:opacity-75 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                value={hosts}
+                value={hosts > 0 ? hosts : undefined}
                 onChange={(e) =>
                   updateDesiredSubnetField(index, "hosts", e.target.value)
                 }
+                min={0}
               />,
               <Button
                 key={`delete-${index + 1}`}

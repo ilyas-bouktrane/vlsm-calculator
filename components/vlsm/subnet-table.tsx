@@ -12,11 +12,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { TableProperties } from "lucide-react";
 import { useVlsmContext } from "./vlsm-provider";
+import { getSubnetMinSizeFromHosts } from "@/lib/utils";
 
 export default function SubnetTable() {
   const { calculationSummary } = useVlsmContext();
 
-  return (
+  return calculationSummary.length !== 0 ? (
     <Card className="gap-0">
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-xl">
@@ -44,14 +45,20 @@ export default function SubnetTable() {
           <TableBody>
             {calculationSummary.map((c, index) => (
               <TableRow key={`row-${index}`}>
-                <TableCell key={`subnet-${index}`}>{c.subnetName}</TableCell>
-                <TableCell key={`hosts-${index}`}>{c.hosts}</TableCell>
-                <TableCell key={`network-${index}`}>{c.networkAddr}</TableCell>
-                <TableCell key={`mask-${index}`}>{c.networkMask}</TableCell>
-                <TableCell key={`range-${index}`}>{c.range}</TableCell>
+                <TableCell key={`name-${index}`}>{c.name}</TableCell>
+                <TableCell key={`hosts-${index}`}>
+                  {c.hosts} / {getSubnetMinSizeFromHosts(c.hosts) - 2} usable
+                </TableCell>
+                <TableCell key={`network-${index}`}>
+                  {c.address}/{c.cidr}
+                </TableCell>
+                <TableCell key={`mask-${index}`}>{c.mask}</TableCell>
+                <TableCell key={`range-${index}`}>
+                  {c.range[0]} - {c.range[1]}
+                </TableCell>
                 <TableCell key={`broadcast-${index}`}>{c.broadcast}</TableCell>
                 <TableCell key={`cidr-${index}`} className="text-right">
-                  <Badge>{c.networkCidr}</Badge>
+                  <Badge>/{c.cidr}</Badge>
                 </TableCell>
               </TableRow>
             ))}
@@ -59,5 +66,7 @@ export default function SubnetTable() {
         </Table>
       </CardContent>
     </Card>
+  ) : (
+    <></>
   );
 }

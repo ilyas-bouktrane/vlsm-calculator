@@ -6,13 +6,13 @@ export type DesiredSubnetworksType = {
 };
 
 export type CalculationSummaryType = {
-  subnetName: string;
-  networkAddr: string;
-  hosts: string;
-  networkMask: string;
+  name: string;
+  address: string;
+  hosts: number;
+  mask: string;
   range: [string, string];
   broadcast: string;
-  networkCidr: string;
+  cidr: number;
 };
 
 export type VlsmContextType = {
