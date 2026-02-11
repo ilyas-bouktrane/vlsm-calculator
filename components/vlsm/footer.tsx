@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="flex justify-center items-center  gap-2">
         <Button variant="link" asChild className="px-1">
           <a
-            href="https://github.com/ilyas-bouktrane/vlsm-calculator"
+            href="https://github.com/ilyas-bouktrane"
             target="_blank"
             rel="noreferrer"
           >
