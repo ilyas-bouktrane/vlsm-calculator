@@ -19,7 +19,7 @@ export function validateIpv4NetworkAddressFormat(addr: string): boolean {
   if (bytes.length !== 4) return false;
 
   return bytes.every((b) => {
-    const num = parseInt(b, 10);
+    const num = Number(b);
     return !isNaN(num) && num >= 0 && num <= 255 && b === num.toString();
   });
 }
@@ -38,12 +38,10 @@ export function binAddrToDecAddr(addr: number) {
 
 export function validateIpv4SubnetAddress(addr: string) {
   const [addressStr, cidrStr] = addr.split("/");
-  const cidr = parseInt(cidrStr);
+  const cidr = Number(cidrStr);
 
   const binMask = decCidrToBinMask(cidr);
-  const binAddr = decAddrToBinAddr(
-    addressStr.split(".").map((b) => parseInt(b)),
-  );
+  const binAddr = decAddrToBinAddr(addressStr.split(".").map((b) => Number(b)));
 
   const closestValidSubnet = binAddrToDecAddr(
     ((binAddr >>> (32 - cidr)) << (32 - cidr)) >>> 0,

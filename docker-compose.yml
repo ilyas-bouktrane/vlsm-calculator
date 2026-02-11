@@ -1,0 +1,10 @@
+# docker-compose.yml
+
+services:
+  app:
+    container_name: vlsm-calculator
+    hostname: vlsm-calculator-app
+    build: .
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
