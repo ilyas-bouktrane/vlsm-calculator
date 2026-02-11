@@ -7,6 +7,7 @@ RUN bun install --frozen-lockfile
 FROM base AS builder
 COPY . .
 RUN bun run build
+RUN ls -la /app
 
 FROM oven/bun:latest AS runner
 WORKDIR /app

@@ -1,7 +1,6 @@
 node_modules
 Dockerfile*
 docker-compose*
-.dockerignore
 .git
 .gitignore
 README.md
@@ -12,4 +11,4 @@ helm-charts
 .env
 .editorconfig
 .idea
-coverage*
+coverage
