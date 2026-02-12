@@ -3,6 +3,7 @@ import { Badge } from "../ui/badge";
 import { ThemeToggle } from "../theme/theme-toggle";
 import { DEFAULT_PAGE_WIDTH } from "@/lib/constants";
 import { useTranslations } from "next-intl";
+import { LanguageToggle } from "../theme/language-toggle";
 
 export default function Header() {
   const t = useTranslations("Header");
@@ -25,6 +26,7 @@ export default function Header() {
           <Badge className="text-sm h-8" variant={"secondary"}>
             {t("badge")}
           </Badge>
+          <LanguageToggle />
           <ThemeToggle />
         </div>
       </div>
