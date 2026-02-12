@@ -1,6 +1,8 @@
+import { useTranslations } from "next-intl";
 import { Button } from "../ui/button";
 
 export default function Footer() {
+  const t = useTranslations("Footer");
   return (
     <footer className="md:fixed flex-col md:flex-row bottom-0 right-0 left-0 flex justify-evenly items-center p-2 border-t-2 text-sm text-muted-foreground backdrop-blur-md">
       <span>VLSM Calculator • {new Date().getFullYear()}</span>
@@ -14,7 +16,7 @@ export default function Footer() {
             GitHub
           </a>
         </Button>
-        <span>• Author: Ilyas Bouktrane •</span>
+        <span>• {t("author")} •</span>
         <Button variant="link" asChild className="px-1">
           <a
             href="https://linkedin.com/in/ilyas-bouktrane"
@@ -25,7 +27,7 @@ export default function Footer() {
           </a>
         </Button>
       </div>
-      <span>IPv4 Subnetting Tool</span>
+      <span>{t("tool")}</span>
     </footer>
   );
 }

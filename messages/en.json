@@ -1,0 +1,72 @@
+{
+  "Page": {
+    "description": "A tool that helps network engineers efficiently divide an IP network into subnets of varying sizes using Variable Length Subnet Masking (VLSM). It calculates subnet addresses, broadcast addresses, and host ranges for optimized IP allocation."
+  },
+  "Header": {
+    "badge": "IPv4 Supported"
+  },
+  "UserInputs": {
+    "mainNetwork": "MAIN NETWORK",
+    "mainNetworkDescription": "Specify the root network address",
+    "addressCidr": "Address/CIDR",
+    "addressCidrPlaceholder": "e.g., 192.168.0.0/24, 10.0.0.0/8...",
+    "desiredSubnetworks": "DESIRED SUBNETWORKS",
+    "desiredSubnetworksDescription": "List the required subnets by specifying the number of hosts needed for each segment.",
+    "networkId": "Network ID/Name",
+    "numberOfHosts": "Number of hosts",
+    "add": "ADD",
+    "validation": {
+      "invalidFormat": "*Invalid network address format",
+      "invalidSubnet": "*Invalid network subnet, do you mean {closestValidSubnet}?",
+      "insufficientSpace": "*Insufficient network mask space, you need at least /{closestValidMask} ({mask})",
+      "validAddress": "Valid Address"
+    }
+  },
+  "CalcResetButtons": {
+    "calculate": "Calculate",
+    "reset": "Reset"
+  },
+  "CalculationSummary": {
+    "title": "CALCULATION SUMMARY",
+    "subnet": "Subnet",
+    "hosts": "Hosts",
+    "capacity": "Capacity",
+    "networkAddress": "Network Address",
+    "mask": "Mask",
+    "range": "Range",
+    "broadcast": "Broadcast",
+    "usable": "usable"
+  },
+  "RootUsageInfoCards": {
+    "subnets": "Subnets",
+    "totalRootCapacity": "Total Root Network Capacity",
+    "usedRootAddresses": "Root Network Addresses Used",
+    "remainingRootAddresses": "Remaining Root Addresses"
+  },
+  "SubnetInfoCards": {
+    "rootNetwork": "Root Network",
+    "totalSubnetCapacity": "Total Subnet Capacity",
+    "allocatedHosts": "Allocated Hosts",
+    "remainingUsableAddresses": "Remaining Usable Addresses"
+  },
+  "RootUsageAllocation": {
+    "title": "ROOT NETWORK RANGE USAGE",
+    "description": "Overall Root Network Address Space Utilization"
+  },
+  "SubnetAllocation": {
+    "title": "SUBNET ALLOCATION",
+    "description": "Internal Subnet Capacity and Host Distribution"
+  },
+  "Footer": {
+    "author": "Author: Ilyas Bouktrane",
+    "tool": "IPv4 Subnetting Tool"
+  },
+  "Theme": {
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System"
+  },
+  "StackedBar": {
+    "unallocated": "Unallocated"
+  }
+}

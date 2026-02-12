@@ -1,4 +1,4 @@
-# 🧮 VLSM Subnet Calculator
+# 🧮 VLSM Calculator
 
 <div align="center">
 

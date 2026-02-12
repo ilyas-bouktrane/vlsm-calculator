@@ -4,12 +4,14 @@ import { useMemo } from "react";
 import { Badge } from "../ui/badge";
 import { DEFAULT_BAR_DYNAMIC_COLORS } from "@/lib/constants";
 import { AllocationBarItemType } from "@/lib/types";
+import { useTranslations } from "next-intl";
 
 export default function HorizontalStackedBar({
   allocations,
 }: {
   allocations: AllocationBarItemType[];
 }) {
+  const t = useTranslations("StackedBar")
   const unallocatedPercentage = useMemo(
     () =>
       1 -
@@ -66,7 +68,7 @@ export default function HorizontalStackedBar({
         >
           <div className="h-3.5 w-3.5 rounded-2xl bg-gray-400" />
           <span className="text-sm">
-            Unallocated ({Math.round(unallocatedPercentage * 100)}%)
+            {t("unallocated")} ({Math.round(unallocatedPercentage * 100)}%)
           </span>
         </Badge>
       </div>

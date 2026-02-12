@@ -1,3 +1,5 @@
+"use client";
+
 import { Globe, Layers, Trash2, Plus } from "lucide-react";
 import { Button } from "../ui/button";
 import {
@@ -19,8 +21,10 @@ import {
   decCidrToBinMask,
   binAddrToDecAddr,
 } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export default function UserInputs() {
+  const t = useTranslations("UserInputs");
   const {
     rootNetwork,
     setRootNetwork,
@@ -38,24 +42,29 @@ export default function UserInputs() {
   );
   const validationMsg = !rootAddrFormatIsValid ? (
     <span className="text-sm text-red-500 text-right">
-      *Invalid network address format
+      {t("validation.invalidFormat")}
     </span>
   ) : !rootAddrSubnet.isValid ? (
     <span className="text-sm text-red-500 text-right">
-      *Invalid network subnet, do you mean{" "}
-      {rootAddrSubnet.closestValidSubnet.join(".")}/{rootNetwork.split("/")[1]}?
+      {t("validation.invalidSubnet", {
+        closestValidSubnet: `${rootAddrSubnet.closestValidSubnet.join(".")}/${
+          rootNetwork.split("/")[1]
+        }`,
+      })}
     </span>
   ) : !rootMaskSubnet.isValid ? (
     <span className="text-sm text-red-500 text-right">
-      *Insufficient network mask space, you need at least /
-      {rootMaskSubnet.closestValidMask} (
-      {binAddrToDecAddr(decCidrToBinMask(rootMaskSubnet.closestValidMask)).join(
-        ".",
-      )}
-      )
+      {t("validation.insufficientSpace", {
+        closestValidMask: rootMaskSubnet.closestValidMask,
+        mask: binAddrToDecAddr(
+          decCidrToBinMask(rootMaskSubnet.closestValidMask),
+        ).join("."),
+      })}
     </span>
   ) : (
-    <span className="text-sm text-green-500 text-right">Valid Address</span>
+    <span className="text-sm text-green-500 text-right">
+      {t("validation.validAddress")}
+    </span>
   );
 
   const updateDesiredSubnetField = (
@@ -86,16 +95,22 @@ export default function UserInputs() {
         <CardHeader className="gap-0">
           <CardTitle className="text-xl flex gap-2 items-center">
             <Globe size={20} />
-            MAIN NETWORK
+            {t("mainNetwork")}
           </CardTitle>
-          <CardDescription>Specify the root network address</CardDescription>
+          <CardDescription>{t("mainNetworkDescription")}</CardDescription>
         </CardHeader>
         <CardContent className="flex gap-1.5 flex-col">
-          <Label>Address/CIDR</Label>
+          <Label>{t("addressCidr")}</Label>
           <Input
-            placeholder="e.g., 192.168.0.0/24, 10.0.0.0/8..."
+            placeholder={t("addressCidrPlaceholder")}
             type="text"
-            className={`placeholder:opacity-75 ${rootNetwork.length === 0 ? "" : !rootAddrIsValid ? "border-red-500 border-2" : "border-green-500"}`}
+            className={`placeholder:opacity-75 ${
+              rootNetwork.length === 0
+                ? ""
+                : !rootAddrIsValid
+                  ? "border-red-500 border-2"
+                  : "border-green-500"
+            }`}
             value={rootNetwork}
             onChange={(e) => setRootNetwork(e.target.value)}
           />
@@ -109,23 +124,22 @@ export default function UserInputs() {
           <CardTitle className="text-xl flex items-center justify-between">
             <div className="flex gap-2 items-center">
               <Layers size={20} />
-              DESIRED SUBNETWORKS
+              {t("desiredSubnetworks")}
             </div>
             <Badge className="text-sm" variant={"secondary"}>
               {desiredSubnetworks.length}
             </Badge>
           </CardTitle>
           <CardDescription>
-            List the required subnets by specifying the number of hosts needed
-            for each segment.
+            {t("desiredSubnetworksDescription")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-[3fr_1fr_40px] gap-x-4 gap-y-3">
             {desiredSubnetworks.length ? (
               <>
-                <Label>Network ID/Name</Label>
-                <Label>Number of hosts</Label>
+                <Label>{t("networkId")}</Label>
+                <Label>{t("numberOfHosts")}</Label>
                 <span>{/* DELETE COL */}</span>
               </>
             ) : (
@@ -171,7 +185,7 @@ export default function UserInputs() {
             onClick={() => addDesiredSubnetField()}
           >
             <Plus />
-            ADD
+            {t("add")}
           </Button>
         </CardFooter>
       </Card>

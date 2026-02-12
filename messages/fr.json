@@ -1,0 +1,72 @@
+{
+  "Page": {
+    "description": "Un outil qui aide les ingénieurs réseau à diviser efficacement un réseau IP en sous-réseaux de tailles variables à l'aide du masquage de sous-réseau à longueur variable (VLSM). Il calcule les adresses de sous-réseau, les adresses de diffusion et les plages d'hôtes pour une allocation IP optimisée."
+  },
+  "Header": {
+    "badge": "IPv4 supporté"
+  },
+  "UserInputs": {
+    "mainNetwork": "RÉSEAU PRINCIPAL",
+    "mainNetworkDescription": "Spécifiez l'adresse réseau racine",
+    "addressCidr": "Adresse/CIDR",
+    "addressCidrPlaceholder": "ex: 192.168.0.0/24, 10.0.0.0/8...",
+    "desiredSubnetworks": "SOUS-RÉSEAUX SOUHAITÉS",
+    "desiredSubnetworksDescription": "Listez les sous-réseaux requis en spécifiant le nombre d'hôtes nécessaires pour chaque segment.",
+    "networkId": "ID/Nom du réseau",
+    "numberOfHosts": "Nombre d'hôtes",
+    "add": "AJOUTER",
+    "validation": {
+      "invalidFormat": "*Format d'adresse réseau invalide",
+      "invalidSubnet": "*Sous-réseau invalide, voulez-vous dire {closestValidSubnet}?",
+      "insufficientSpace": "*Espace de masque réseau insuffisant, vous avez besoin d'au moins /{closestValidMask} ({mask})",
+      "validAddress": "Adresse valide"
+    }
+  },
+  "CalcResetButtons": {
+    "calculate": "Calculer",
+    "reset": "Réinitialiser"
+  },
+  "CalculationSummary": {
+    "title": "RÉSUMÉ DU CALCUL",
+    "subnet": "Sous-réseau",
+    "hosts": "Hôtes",
+    "capacity": "Capacité",
+    "networkAddress": "Adresse réseau",
+    "mask": "Masque",
+    "range": "Plage",
+    "broadcast": "Diffusion",
+    "usable": "utilisables"
+  },
+  "RootUsageInfoCards": {
+    "subnets": "Sous-réseaux",
+    "totalRootCapacity": "Capacité totale du réseau racine",
+    "usedRootAddresses": "Adresses réseau racine utilisées",
+    "remainingRootAddresses": "Adresses racine restantes"
+  },
+  "SubnetInfoCards": {
+    "rootNetwork": "Réseau racine",
+    "totalSubnetCapacity": "Capacité totale du sous-réseau",
+    "allocatedHosts": "Hôtes alloués",
+    "remainingUsableAddresses": "Adresses utilisables restantes"
+  },
+  "RootUsageAllocation": {
+    "title": "UTILISATION DE LA PLAGE DU RÉSEAU RACINE",
+    "description": "Utilisation globale de l'espace d'adressage du réseau racine"
+  },
+  "SubnetAllocation": {
+    "title": "ALLOCATION DES SOUS-RÉSEAUX",
+    "description": "Capacité interne des sous-réseaux et distribution des hôtes"
+  },
+  "Footer": {
+    "author": "Auteur: Ilyas Bouktrane",
+    "tool": "Outil de sous-réseautage IPv4"
+  },
+  "Theme": {
+    "dark": "Sombre",
+    "light": "Clair",
+    "system": "Système"
+  },
+  "StackedBar": {
+    "unallocated": "Non alloué"
+  }
+}

@@ -1,10 +1,14 @@
+"use client";
+
 import { Calculator, RotateCcw } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { useVlsmContext } from "./vlsm-provider";
 import { calculateVlsm, getSubnetMinSizeFromHosts } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export default function CalcResetButtons() {
+  const t = useTranslations("CalcResetButtons");
   const {
     readyToCalculate,
     setCalculationSummary,
@@ -73,14 +77,14 @@ export default function CalcResetButtons() {
         disabled={!readyToCalculate}
         className="flex-1"
       >
-        <Calculator /> Calculate
+        <Calculator /> {t("calculate")}
       </Button>
       <Button
         className="flex-1"
         variant={"destructive"}
         onClick={() => handleReset()}
       >
-        <RotateCcw /> Reset
+        <RotateCcw /> {t("reset")}
       </Button>
     </Card>
   );

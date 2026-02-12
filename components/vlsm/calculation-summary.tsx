@@ -13,8 +13,10 @@ import { Badge } from "../ui/badge";
 import { TableProperties } from "lucide-react";
 import { useVlsmContext } from "./vlsm-provider";
 import { getSubnetMinSizeFromHosts } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 export default function CalculationSummary() {
+  const t = useTranslations("CalculationSummary");
   const { calculationSummary } = useVlsmContext();
 
   return calculationSummary.length !== 0 ? (
@@ -22,22 +24,34 @@ export default function CalculationSummary() {
       <CardHeader>
         <CardTitle className="flex items-center gap-2 text-xl">
           <TableProperties />
-          CALCULATION SUMMARY
+          {t("title")}
         </CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="text-muted-foreground">Subnet</TableHead>
-              <TableHead className="text-muted-foreground">Hosts</TableHead>
-              <TableHead className="text-muted-foreground">Capacity</TableHead>
               <TableHead className="text-muted-foreground">
-                Network Address
+                {t("subnet")}
               </TableHead>
-              <TableHead className="text-muted-foreground">Mask</TableHead>
-              <TableHead className="text-muted-foreground">Range</TableHead>
-              <TableHead className="text-muted-foreground">Broadcast</TableHead>
+              <TableHead className="text-muted-foreground">
+                {t("hosts")}
+              </TableHead>
+              <TableHead className="text-muted-foreground">
+                {t("capacity")}
+              </TableHead>
+              <TableHead className="text-muted-foreground">
+                {t("networkAddress")}
+              </TableHead>
+              <TableHead className="text-muted-foreground">
+                {t("mask")}
+              </TableHead>
+              <TableHead className="text-muted-foreground">
+                {t("range")}
+              </TableHead>
+              <TableHead className="text-muted-foreground">
+                {t("broadcast")}
+              </TableHead>
               <TableHead className="text-muted-foreground text-right">
                 CIDR
               </TableHead>
@@ -54,7 +68,7 @@ export default function CalculationSummary() {
                 <TableRow key={`row-${index}`}>
                   <TableCell key={`name-${index}`}>{c.name}</TableCell>
                   <TableCell key={`hosts-${index}`}>
-                    {c.hosts} / {subnetCapacity} usable
+                    {c.hosts} / {subnetCapacity} {t("usable")}
                   </TableCell>
                   <TableCell key={`capacity-${index}`}>
                     {hostsPercentage}%
