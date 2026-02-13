@@ -43,3 +43,11 @@ export type AllocationBarItemType = {
   label: string;
   cidr: number;
 };
+
+export type PrevDataType = {
+  rootNetwork: string;
+  desiredSubnetworks: DesiredSubnetworksType[];
+  calculationSummary: CalculationSummaryType[];
+  miniCardsInfos: MiniCardsInfosType | null;
+  scrollPosY: number
+};

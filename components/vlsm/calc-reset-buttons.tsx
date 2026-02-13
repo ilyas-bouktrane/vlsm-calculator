@@ -67,6 +67,7 @@ export default function CalcResetButtons() {
   const handleReset = () => {
     setCalculationSummary([]);
     setDesiredSubnetworks([]);
+    setMiniCardsInfos(null);
     setRootNetwork("");
   };
 
