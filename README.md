@@ -21,8 +21,10 @@ A modern, intuitive, and responsive VLSM (Variable Length Subnet Masking) calcul
 
 ---
 
-![Application Top Screenshot](images/top-preview.png)
-![Application Bottom Screenshot](images/bottom-preview.png)
+### Preview
+
+![Application Top Screenshot](screenshots/top-preview.png)
+![Application Bottom Screenshot](screenshots/bottom-preview.png)
 
 ## 🚀 About The Project
 
@@ -39,6 +41,7 @@ The architecture clearly separates the calculation logic (VLSM engine), global s
 - **Containerized with Docker**: Ready to be deployed or run locally in a containerized environment.
 - **Dark/Light Theme**: Switch between themes for optimal visual comfort.
 - **Responsive Design**: Usable on desktop, tablet, and mobile.
+- **Internationalization (i18n)**: Supports multiple languages (English & French) with easy language switching.
 
 ## 🛠️ Tech Stack
 
@@ -144,7 +147,11 @@ The project is organized with a clear separation of concerns, making it modular 
 │   ├── 📁 ui/      # Contains base UI components from Shadcn/ui (Button, Card, etc.).
 │   └── 📁 vlsm/    # Contains high-level components specific to the VLSM calculator's features.
 │
+├── 📁 i18n/       # Contains `next-intl` configuration files for request, routing and navigation handling.
+│
 ├── 📁 lib/        # Central hub for the application's core logic, type definitions, and shared utilities.
+│
+├── 📁 messages/   # Contains the translation files (`en.json`, `fr.json`).
 │
 ├── 📁 public/     # Stores all static assets like icons and images that are publicly accessible.
 │
